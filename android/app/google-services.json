@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "731897338820",
+    "project_id": "scansavy-49f5a",
+    "storage_bucket": "scansavy-49f5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731897338820:android:99bf03277fcf0bc62c2291",
+        "android_client_info": {
+          "package_name": "com.example.scansavy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcoW-EUZtEGUI5EiCIqCLgMosLXddw-6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
