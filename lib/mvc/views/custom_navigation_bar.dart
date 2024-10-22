@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:scansavy/constants/colors.dart';
 import 'package:scansavy/mvc/controllers/custom_navigation_controller.dart';
-import 'package:scansavy/mvc/views/item/item_screen.dart';
+import 'package:scansavy/mvc/views/item/post_item_screen.dart';
 import 'package:scansavy/mvc/views/profile/profile_screen.dart';
 import 'package:scansavy/mvc/views/scan/scan_screen.dart';
 
@@ -13,7 +13,7 @@ class CustomNavigationBar extends StatelessWidget {
   final List<Widget> pages = [
     HomeScreen(),
     const ScanScreen(),
-    ItemScreen(),
+    PostItemScreen(),
     ProfileScreen(),
   ];
 

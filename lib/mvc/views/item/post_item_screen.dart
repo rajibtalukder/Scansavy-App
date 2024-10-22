@@ -1,21 +1,19 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:scansavy/constants/colors.dart';
 import 'package:scansavy/custom_widgets/custom_button.dart';
 import 'package:scansavy/custom_widgets/custom_text_field.dart';
 import 'package:scansavy/custom_widgets/custom_texts.dart';
-import 'package:scansavy/mvc/controllers/item_controller.dart';
+import 'package:scansavy/mvc/controllers/postitem_controller.dart';
 import 'package:scansavy/mvc/controllers/profile_controller.dart';
 import 'package:scansavy/mvc/views/item/widgets/image_box_widget.dart';
 
-class ItemScreen extends StatelessWidget {
-  ItemScreen({super.key});
+class PostItemScreen extends StatelessWidget {
+  PostItemScreen({super.key});
 
-  ItemController itemController = Get.put(ItemController());
+  PostItemController itemController = Get.put(PostItemController());
   ProfileController profileController = Get.put(ProfileController());
 
   @override
@@ -29,7 +27,7 @@ class ItemScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: GetBuilder<ItemController>(
+        child: GetBuilder<PostItemController>(
             id: 'imgPathUpdate',
             builder: (authController) {
               return SingleChildScrollView(
@@ -71,33 +69,63 @@ class ItemScreen extends StatelessWidget {
                     subTitleText('Item Name',
                         size: 16, fontWeight: FontWeight.w500),
                     SizedBox(height: 8.h),
-                    customTextField(TextEditingController(),
+                    customTextField(itemController.itemNameCntr,
                         hintText: 'Enter Product Name'),
                     SizedBox(height: 16.h),
                     subTitleText('Item Category',
                         size: 16, fontWeight: FontWeight.w500),
                     SizedBox(height: 8.h),
-                    customTextField(TextEditingController(),
-                        isActive: false,
-                        hintText: 'Select Category',
-                        icon: Icons.keyboard_arrow_down,
-                        iconColor: secondaryTextColor),
+                    GestureDetector(
+                      onTap: () {
+                        showMenu(
+                          context: context,
+                          items: [
+                            PopupMenuItem<String>(
+                              value: 'Category 1',
+                              child: subTitleText("Category 1",size: 14, fontWeight: FontWeight.w400),
+                            ),
+                            PopupMenuItem<String>(
+                              value: 'Category 2',
+                              child: subTitleText("Category 2",size: 14, fontWeight: FontWeight.w400),
+                            ),
+                            PopupMenuItem<String>(
+                              value: 'Category 3',
+                              child: subTitleText("Category 3",size: 14, fontWeight: FontWeight.w400),
+                            ),
+                          ], position: RelativeRect.fromLTRB(100.w, 400.h, 100.w, 0.h),
+                        ).then((value) {
+                          if (value != null) {
+                            itemController.categoryCntr.text = value;
+                          }
+                        });
+                      },
+                      child: customTextField(itemController.categoryCntr,
+                          isActive: false,
+                          hintText: 'Select Category',
+                          icon: Icons.keyboard_arrow_down,
+                          iconColor: secondaryTextColor),
+                    ),
                     SizedBox(height: 16.h),
                     subTitleText('Item Link',
                         size: 16, fontWeight: FontWeight.w500),
                     SizedBox(height: 8.h),
-                    customTextField(TextEditingController(),
+                    customTextField(itemController.itemLinkCntr,
                         hintText: 'Enter Website Link of Item'),
                     SizedBox(height: 16.h),
                     subTitleText('Item Tags',
                         size: 16, fontWeight: FontWeight.w500),
                     SizedBox(height: 8.h),
-                    customTextField(TextEditingController(),
+                    customTextField(itemController.itemTagCntr,
                         hintText: 'Enter Similar Tags'),
                     SizedBox(height: 32.h),
                     customButton('Post Item', fontW: FontWeight.w400,
                         onPressed: () {
-                      profileController.itemCount.value++;
+                      itemController.uploadItem();
+
+                print(itemController.imagePath);
+
+
+                     /* profileController.itemCount.value++;
                       profileController.update();
                       itemController.imagePath = '';
                       itemController.update(['imgPathUpdate']);
@@ -109,7 +137,7 @@ class ItemScreen extends StatelessWidget {
                         colorText: Colors.white,
                         snackPosition: SnackPosition.BOTTOM,
                         backgroundColor: black,
-                      );
+                      );*/
                     }),
                     SizedBox(height: 32.h),
                   ],

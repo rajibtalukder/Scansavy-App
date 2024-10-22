@@ -7,11 +7,11 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../custom_widgets/custom_button.dart';
-import '../../../controllers/item_controller.dart';
+import '../../../controllers/postitem_controller.dart';
 
 class ImageBoxWidget extends StatelessWidget {
    ImageBoxWidget({super.key});
-  ItemController itemController = Get.put(ItemController());
+   PostItemController itemController = Get.put(PostItemController());
 
   @override
   Widget build(BuildContext context) {
