@@ -5,13 +5,14 @@ import 'package:scansavy/constants/colors.dart';
 import 'package:scansavy/custom_widgets/custom_text_field.dart';
 import 'package:scansavy/mvc/controllers/authentication_controller.dart';
 import 'package:scansavy/mvc/views/auth/general_signup_screen1.dart';
-import 'package:scansavy/mvc/views/custom_navigation_bar.dart';
 import '../../../custom_widgets/custom_button.dart';
 import '../../../custom_widgets/custom_texts.dart';
 
 class LoginScreen extends StatelessWidget {
-   LoginScreen({super.key});
-   final AuthenticationController _authController = Get.put(AuthenticationController());
+  LoginScreen({super.key});
+
+  final AuthenticationController _authController =
+      Get.put(AuthenticationController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +36,25 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 12.h),
               subTitleText('Password', fontWeight: FontWeight.w500, size: 16),
               SizedBox(height: 8.h),
-              customTextField(_authController.signinPass,
-                  hintText: 'Enter Password',
-                  icon: Icons.visibility_off_outlined,
-                  obscureText: true),
+              GetBuilder<AuthenticationController>(
+                  id: "passUpdate",
+                  builder: (context) {
+                    return customTextField(_authController.signinPass,
+                        hintText: 'Enter Password',
+                        icon: _authController.passHide.value
+                            ? Icons.visibility
+                            : Icons.visibility_off_outlined,
+                        onSufIconPress: () {
+                      _authController.passValueChange();
+                    },
+                        obscureText:
+                            _authController.passHide.value ? false : true);
+                  }),
               SizedBox(height: 12.h),
               subTitleText('Forgot password?', color: yellow, size: 14),
               SizedBox(height: 30.h),
               customButton('Login', fontW: FontWeight.w400, onPressed: () {
                 _authController.signIn();
-
               }),
               SizedBox(height: 20.h),
               firstRow(),
@@ -57,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                   subTitleText('Don’t have an account? ',
                       fontWeight: FontWeight.w500, size: 18),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Get.to(GeneralSignupScreen1());
                     },
                     child: subTitleText('Sign UP',

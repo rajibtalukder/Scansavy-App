@@ -22,11 +22,7 @@ class AuthenticationController extends GetxController {
   bool isPasswordValid = true;
 
   void passValueChange() {
-    if (passHide.isTrue) {
-      passHide.value = false;
-    } else {
-      passHide.value = true;
-    }
+    passHide.value = !passHide.value;
     print(passHide.value);
     update(['passUpdate']);
   }
@@ -35,7 +31,6 @@ class AuthenticationController extends GetxController {
   final _db = FirebaseFirestore.instance;
 
   Future<bool> signIn() async {
-    //isLoading.value = true;
     Utils.showLoading();
     validateLogIn(signinEmail.text, signinPass.text);
     if (!isPasswordValid) {
@@ -46,18 +41,17 @@ class AuthenticationController extends GetxController {
     bool success = false;
     await auth
         .signInWithEmailAndPassword(
-            email: signinEmail.text, password: signinPass.text)
+        email: signinEmail.text, password: signinPass.text)
         .then((value) {
       Utils.showSnackBar('You\'re logged in successfully');
       Utils.hidePopup();
       success = true;
-      Get.to(CustomNavigationBar());
+      Get.offAll(CustomNavigationBar());
     }).catchError((e) {
       print(e.code);
       Utils.hidePopup();
       Utils.showSnackBar(e.code);
     });
-    //isLoading.value = false;
     return success;
   }
 
@@ -66,41 +60,26 @@ class AuthenticationController extends GetxController {
     isPasswordValid = Utils.isPasswordValid(pass);
   }
 
-  Future<bool> isEmailAlreadyUsed(String emailPhnCntlr) async {
-    try {
-      List<String> signInMethods =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailPhnCntlr);
-      // If signInMethods is not empty, that means the email is already in use.
-      return signInMethods.isNotEmpty;
-    } catch (e) {
-      print("Error checking email registration: $e");
-      return false;
-    }
-  }
 
   Future<bool> signUp() async {
-    //isLoading.value = true;
-    if (await isEmailAlreadyUsed(emailPhnCntlr.text)) {
-      print("Email is already registered");
-      Utils.showSnackBar('Email is already registered');
-      return false;
-    } else {
       Utils.showLoading();
       await auth
           .createUserWithEmailAndPassword(
-              email: emailPhnCntlr.text, password: passCntlr.text)
+          email: emailPhnCntlr.text, password: passCntlr.text)
           .then((value) async {
         Utils.hidePopup();
         await FirebaseAuth.instance.currentUser!.sendEmailVerification();
-        Get.to(LoginScreen());
-        //isLoading.value = false;
+        createUser(UserModel(userName: userNameCntlr.text,
+            emailOrPhone: emailPhnCntlr.text,
+            password: passCntlr.text,
+            confirmPassword: conPassCntlr.text));
+        Get.to(()=>LoginScreen());
       }).catchError((e) {
-        print(e.code);
+        Utils.hidePopup();
         Utils.showSnackBar(e.code);
       });
-      Utils.hidePopup();
       return true;
-    }
+
   }
 
   Future<void> createUser(UserModel userModel) async {

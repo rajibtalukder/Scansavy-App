@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../constants/colors.dart';
@@ -7,12 +8,16 @@ class Utils {
   static void showLoading([String? message]) {
     Get.dialog(
       Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.circular(5.r), // Set the border radius to 5.r
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(10.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const CircularProgressIndicator(),
+              const CircularProgressIndicator(color: blackTextColor),
               const SizedBox(height: 8),
               Text(message ?? 'Loading...'),
             ],

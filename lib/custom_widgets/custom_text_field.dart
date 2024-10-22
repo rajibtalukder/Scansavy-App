@@ -8,6 +8,7 @@ Widget customTextField(TextEditingController controller,
     {
       bool obscureText = false,
       bool? isValid,
+      Function()? onSufIconPress,
       bool isKeyboardPhone= false,
       IconData? icon,
       IconData? preficon,
@@ -42,7 +43,9 @@ Widget customTextField(TextEditingController controller,
                 fillColor: grey,
                 contentPadding: EdgeInsets.only(top: 14.h, left: 14.w),
 
-                suffixIcon:icon!=null? Icon(icon,color: iconColor??blackTextColor): const SizedBox(),
+                suffixIcon:icon!=null? GestureDetector(
+                    onTap: onSufIconPress,
+                    child: Icon(icon,color: iconColor??blackTextColor)): const SizedBox(),
                 prefixIcon:preficon!=null? Icon(preficon,color: iconColor??blackTextColor):null,
               ),
               obscureText: obscureText,
