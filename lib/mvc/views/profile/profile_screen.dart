@@ -4,20 +4,24 @@ import 'package:get/get.dart';
 import 'package:scansavy/mvc/views/profile/widgets/drawer_widget.dart';
 import 'package:scansavy/mvc/views/profile/widgets/my_items_widget.dart';
 import 'package:scansavy/mvc/views/profile/widgets/personal_info_widget.dart';
-
 import '../../../custom_widgets/custom_texts.dart';
 import '../../controllers/profile_controller.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   ProfileController profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: profileController.scaffoldKey,
-      drawer: drawerWidget(),
+      drawer: drawerWidget(profileController),
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -51,7 +55,4 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-
-
-
 }

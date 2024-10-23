@@ -128,4 +128,6 @@ class PostItemController extends GetxController {
     print('Failed to upload item: ${e.message}');
     }
   }*/
+
+
 }

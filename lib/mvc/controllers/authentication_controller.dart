@@ -92,4 +92,9 @@ class AuthenticationController extends GetxController {
       Utils.showSnackBar(e.code);
     });
   }
+
+
+
+
+
 }

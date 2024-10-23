@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:scansavy/mvc/controllers/profile_controller.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../custom_widgets/custom_texts.dart';
 import '../../item_batch/item_batch_screen1.dart';
 
-Widget drawerWidget() {
+Widget drawerWidget(ProfileController controller) {
   return Drawer(
     backgroundColor: white,
     shape: const RoundedRectangleBorder(
@@ -34,7 +35,12 @@ Widget drawerWidget() {
           row('assets/images/timer.png', 'Activity & History'),
           row('assets/images/setting.png', 'Settings'),
           row('assets/images/support.png', 'Support & Help'),
-          row('assets/images/logout.png', 'Logout'),
+          GestureDetector(
+                  onTap: (){
+                    controller.signOut();
+                  },
+                  child: row('assets/images/logout.png', 'Logout'))
+
         ],
       ),
     ),

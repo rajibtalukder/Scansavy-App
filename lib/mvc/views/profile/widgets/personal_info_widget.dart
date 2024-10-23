@@ -52,10 +52,10 @@ class PersonalInfoWidget extends StatelessWidget {
                 profileController.isExpanded.value
                     ? Column(
                   children: [
-                    personalInfoData('Username', 'Fahad125'),
-                    personalInfoData('Email', 'ruhanahmed@gmail.com'),
+                    personalInfoData('Username', profileController.userData?.userName??""),
+                    personalInfoData('Email', profileController.userData?.emailOrPhone??""),
                     personalInfoData('Mobile Number', '+01766482816'),
-                    personalInfoData('Password', '**************',
+                    personalInfoData('Password', profileController.userData?.confirmPassword??"",
                         isLine: false),
                   ],
                 )
