@@ -7,14 +7,18 @@ import 'package:scansavy/custom_widgets/custom_button.dart';
 import 'package:scansavy/custom_widgets/custom_text_field.dart';
 import 'package:scansavy/custom_widgets/custom_texts.dart';
 import 'package:scansavy/mvc/controllers/postitem_controller.dart';
-import 'package:scansavy/mvc/controllers/profile_controller.dart';
 import 'package:scansavy/mvc/views/item/widgets/image_box_widget.dart';
 
-class PostItemScreen extends StatelessWidget {
+class PostItemScreen extends StatefulWidget {
+
   PostItemScreen({super.key});
 
-  PostItemController itemController = Get.put(PostItemController());
-  ProfileController profileController = Get.put(ProfileController());
+  @override
+  State<PostItemScreen> createState() => _PostItemScreenState();
+}
+
+class _PostItemScreenState extends State<PostItemScreen> {
+  final PostItemController _itemController = Get.put(PostItemController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +39,10 @@ class PostItemScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ImageBoxWidget(),
-                    itemController.imagePath.isEmpty
+                    _itemController.imagePath.isEmpty
                         ? const SizedBox()
                         : SizedBox(height: 16.h),
-                    itemController.imagePath.isEmpty
+                    _itemController.imagePath.isEmpty
                         ? const SizedBox()
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,8 +53,8 @@ class PostItemScreen extends StatelessWidget {
                                   width: 164.w,
                                   textSize: 14,
                                   fontW: FontWeight.w400, onPressed: () {
-                                itemController.imagePath = '';
-                                itemController.update(['imgPathUpdate']);
+                                _itemController.imagePath = '';
+                                _itemController.update(['imgPathUpdate']);
                               }),
                               customButton('Remove',
                                   color: white,
@@ -60,8 +64,8 @@ class PostItemScreen extends StatelessWidget {
                                   textSize: 14,
                                   textColor: black,
                                   fontW: FontWeight.w400, onPressed: () {
-                                itemController.imagePath = '';
-                                itemController.update(['imgPathUpdate']);
+                                _itemController.imagePath = '';
+                                _itemController.update(['imgPathUpdate']);
                               }),
                             ],
                           ),
@@ -69,7 +73,7 @@ class PostItemScreen extends StatelessWidget {
                     subTitleText('Item Name',
                         size: 16, fontWeight: FontWeight.w500),
                     SizedBox(height: 8.h),
-                    customTextField(itemController.itemNameCntr,
+                    customTextField(_itemController.itemNameCntr,
                         hintText: 'Enter Product Name'),
                     SizedBox(height: 16.h),
                     subTitleText('Item Category',
@@ -95,11 +99,11 @@ class PostItemScreen extends StatelessWidget {
                           ], position: RelativeRect.fromLTRB(100.w, 400.h, 100.w, 0.h),
                         ).then((value) {
                           if (value != null) {
-                            itemController.categoryCntr.text = value;
+                            _itemController.categoryCntr.text = value;
                           }
                         });
                       },
-                      child: customTextField(itemController.categoryCntr,
+                      child: customTextField(_itemController.categoryCntr,
                           isActive: false,
                           hintText: 'Select Category',
                           icon: Icons.keyboard_arrow_down,
@@ -109,20 +113,20 @@ class PostItemScreen extends StatelessWidget {
                     subTitleText('Item Link',
                         size: 16, fontWeight: FontWeight.w500),
                     SizedBox(height: 8.h),
-                    customTextField(itemController.itemLinkCntr,
+                    customTextField(_itemController.itemLinkCntr,
                         hintText: 'Enter Website Link of Item'),
                     SizedBox(height: 16.h),
                     subTitleText('Item Tags',
                         size: 16, fontWeight: FontWeight.w500),
                     SizedBox(height: 8.h),
-                    customTextField(itemController.itemTagCntr,
+                    customTextField(_itemController.itemTagCntr,
                         hintText: 'Enter Similar Tags'),
                     SizedBox(height: 32.h),
                     customButton('Post Item', fontW: FontWeight.w400,
                         onPressed: () {
-                      itemController.uploadItem();
+                      _itemController.uploadItem();
 
-                print(itemController.imagePath);
+                print(_itemController.imagePath);
 
 
                      /* profileController.itemCount.value++;
